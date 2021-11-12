@@ -51,6 +51,9 @@ class Vehicle
      */
     private $sales;
 
+    private $is_sold;
+    private $last_sale_date;
+
     public function __construct()
     {
         $this->sales = new ArrayCollection();
@@ -118,6 +121,32 @@ class Vehicle
     {
         $this->store = $store;
 
+        return $this;
+    }
+
+    public function getIsSold(): ?bool
+    {
+        return $this->is_sold = count($this->getSales()) > 0;
+    }
+
+    public function setIsSold(?bool $is_sold): self
+    {
+        $this->is_sold = $is_sold;
+
+        return $this;
+    }
+
+    public function getLastSaleDate(): ?\DateTimeInterface
+    {
+        foreach ($this->sales as $sale){
+            $this->last_sale_date = $sale->getSaleDate();
+        }
+        return $this->last_sale_date;
+    }
+
+    public function setLastSaleDate(\DateTimeInterface $last_sale_date): self
+    {
+        $this->last_sale_date = $last_sale_date;
         return $this;
     }
 
