@@ -4,14 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Sale;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @method Sale|null find($id, $lockMode = null, $lockVersion = null)
- * @method Sale|null findOneBy(array $criteria, array $orderBy = null)
- * @method Sale[]    findAll()
- * @method Sale[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class SaleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -19,32 +15,24 @@ class SaleRepository extends ServiceEntityRepository
         parent::__construct($registry, Sale::class);
     }
 
-    // /**
-    //  * @return Sale[] Returns an array of Sale objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    public function getSalesByStoreId($id){
+        return $this->getEntityManager()->createQuery(
+            "SELECT sale.sale_price
+            FROM App:Sale sale 
+            INNER JOIN sale.vehicle vehicle 
+            WHERE vehicle.store = :id"
+        )->setParameters(new ArrayCollection([
+            new Parameter('id', $id)
+        ]))->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Sale
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    public function getCostsByStoreId($id){
+        return $this->getEntityManager()->createQuery(
+            "SELECT vehicle.cost
+            FROM App:Vehicle vehicle 
+            WHERE vehicle.store = :id"
+        )->setParameters(new ArrayCollection([
+            new Parameter('id', $id)
+        ]))->getResult();
     }
-    */
 }

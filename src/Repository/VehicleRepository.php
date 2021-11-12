@@ -6,12 +6,6 @@ use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @method Vehicle|null find($id, $lockMode = null, $lockVersion = null)
- * @method Vehicle|null findOneBy(array $criteria, array $orderBy = null)
- * @method Vehicle[]    findAll()
- * @method Vehicle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class VehicleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -19,32 +13,15 @@ class VehicleRepository extends ServiceEntityRepository
         parent::__construct($registry, Vehicle::class);
     }
 
-    // /**
-    //  * @return Vehicle[] Returns an array of Vehicle objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    public function getVehicles($field,$order){
+        return $this->getEntityManager()->createQuery(
+            'SELECT vehicle.id,vehicle.license,brand.name as brand_name,model.name as model_name,vehicle.entry_date as entry_date,vehicle.cost,store.name as store_name,sale.sale_date as last_sale_date,sale.sale_price 
+            FROM App:Vehicle vehicle 
+            LEFT JOIN vehicle.sales sale 
+            LEFT JOIN vehicle.model model 
+            LEFT JOIN model.brand brand 
+            LEFT JOIN vehicle.store store  
+            ORDER BY '.$field.' '.$order
+        )->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Vehicle
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
