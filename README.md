@@ -32,7 +32,7 @@ Requisitos para el funcionamiento
 Rutas accesibles de la API
 
     
-POST http://127.0.0.1:8000/api/vehicle/getAll
+POST http://127.0.0.1:8000/api/vehicle/getAll (Ojo, usar Postman, la ruta es POST.)
 
 Muestra todos los vehículos en la base de datos, acepta dos parámetros POST para odenar los resultados.
 
