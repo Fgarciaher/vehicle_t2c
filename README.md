@@ -3,11 +3,12 @@
 Requisitos para el funcionamiento
 
     PHP +7.2.31
-    Base de datos MariaDB +10.3.28 en localhost:3306
+    Base de datos MariaDB +10.3.28 en localhost:3306 (Configurar en .env)
     PHP Composer
     PHP Symfony
 
 ##Instalación
+
     1. Instalación de composer
     https://getcomposer.org/download/
 
