@@ -17,7 +17,7 @@ class SaleRepository extends ServiceEntityRepository
 
     public function getSalesByStoreId($id){
         return $this->getEntityManager()->createQuery(
-            "SELECT sale.sale_price
+            "SELECT sale.price
             FROM App:Sale sale 
             INNER JOIN sale.vehicle vehicle 
             WHERE vehicle.store = :id"
